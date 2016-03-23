@@ -1,0 +1,34 @@
+package ItemSetMining
+
+import oscar.cp.modeling._
+import oscar.cp.core._
+import oscar.util._
+import oscar.cp._
+import oscar.util._
+import oscar.cp.core.CPPropagStrength
+import oscar.cp.core.CPOutcome._
+import oscar.cp.core.CPOutcome
+import oscar.algo.reversible._
+class FrequencyReversibleSparseBitSet3(val I: Array[CPBoolVar], val frequency : Int, val Items : Range,val nItems : Int, val nTrans : Int, TDB: Array[Set[Int]]) extends Constraint(I(1).store, "Frequency") {
+
+	val rset = new ReversibleSparseBitSet(s, nTrans+1,List.range(1, nTrans+1).toSet)
+	val columns = Array.range(0, nItems).map { x => new rset.BitSet(TDB(x)) }
+
+	override def setup(l: CPPropagStrength): CPOutcome =  {
+			Items.foreach { i => I(i).callValBindIdxWhenBind(this,i) }
+			return Suspend
+	}
+
+
+	override def valBindIdx(item: CPIntVar, i: Int): CPOutcome = {
+    if(item.value == 1){
+      rset.clearCollected()
+				rset.collect(columns(i))
+				rset.intersectCollected()
+				if(rset.cardinality()<frequency){
+					return Failure
+				}
+			}
+			return Suspend
+	}
+}

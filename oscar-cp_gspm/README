@@ -1,0 +1,39 @@
+This is a SBT skeletton project to use OscaR-CP
+
+Command line
+-------------
+
+1) Install SBT (http://www.scala-sbt.org/)
+
+2) start sbt
+
+>> sbt
+
+3) from sbt console do:
+
+>> run
+
+Then type the number corresponding to the example you want to run.
+The first time all the dependencies are downloaded and the source file are compiled)
+
+Some useful sbt commands are:
+ exit, compile, reload, update, clean, run-main 
+Please refer to sbt-documentation for more info http://www.scala-sbt.org/
+
+
+Create eclipse or IntelliJ project structure
+--------------------------------------------
+
+Two useful SBT commands allows to generate the project structure (execute it only once)
+
+1) For IntelliJ
+
+>> gen-idea
+
+Then from IntelliJ do: open existing project and select the root directory
+
+2) For eclipse (make sure you have the Scala IDE plugin installed http://scala-ide.org)
+
+>> eclipse
+
+Then from eclipse do: Import existing project and select the root directory
